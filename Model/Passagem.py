@@ -1,8 +1,10 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class PassagemComprada(BaseModel):
+from Model.Pessoa import Pessoa
+
+class Passagem(BaseModel):
     id: Optional[int] = None
-    id_pessoa: int
+    pessoa: Pessoa
     id_voo: int
-    
+    cadeira: int

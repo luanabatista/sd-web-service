@@ -5,7 +5,7 @@ import datetime
 
 class PassagemComprada(BaseModel):
     id: Optional[int] = None
-    id_pessoa: int
+    pessoa: int
     id_Hospedagem: int
     data_entrada: datetime.datetime(int, int, int, int ,int)
     data_saida: datetime.datetime(int, int, int, int ,int)

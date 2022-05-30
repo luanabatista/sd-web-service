@@ -4,7 +4,7 @@ from typing import Optional
 import datetime
 
 class DadosCartao(BaseModel):
-    id: Optional[int] = None
-    numero: int
+    nome: str
+    numero: str
     crv: int
-    vencimento: datetime.datetime(int, int)
+    vencimento: str
