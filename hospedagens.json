@@ -1,1 +1,347 @@
-[]
+[
+    {
+        "id": 1,
+        "nome": "Hotel Nuvem",
+        "destino": "BSB",
+        "quartos_disp": [
+            6,
+            11,
+            12,
+            13,
+            22,
+            24,
+            25
+        ],
+        "preco_hospedagem": 486.59
+    },
+    {
+        "id": 2,
+        "nome": "Hotel Estrela",
+        "destino": "BSB",
+        "quartos_disp": [
+            5,
+            6,
+            38,
+            39
+        ],
+        "preco_hospedagem": 486.59
+    },
+    {
+        "id": 3,
+        "nome": "Hotel Sol",
+        "destino": "BSB",
+        "quartos_disp": [
+            4,
+            8,
+            9
+        ],
+        "preco_hospedagem": 590.0
+    },
+    {
+        "id": 4,
+        "nome": "Hotel Verão",
+        "destino": "BSB",
+        "quartos_disp": [
+            3,
+            4,
+            15,
+            16,
+            17
+        ],
+        "preco_hospedagem": 321.5
+    },
+    {
+        "id": 5,
+        "nome": "Hotel Outono",
+        "destino": "BSB",
+        "quartos_disp": [
+            6,
+            11,
+            12,
+            13,
+            22,
+            24,
+            25
+        ],
+        "preco_hospedagem": 457.16
+    },
+    {
+        "id": 6,
+        "nome": "Hotel Primavera",
+        "destino": "BSB",
+        "quartos_disp": [
+            5,
+            6,
+            38,
+            39
+        ],
+        "preco_hospedagem": 354.65
+    },
+    {
+        "id": 7,
+        "nome": "Hotel Inverno",
+        "destino": "BSB",
+        "quartos_disp": [
+            5,
+            6,
+            38,
+            39
+        ],
+        "preco_hospedagem": 367.54
+    },
+    {
+        "id": 8,
+        "nome": "Hotel Azaleia",
+        "destino": "BSB",
+        "quartos_disp": [
+            3,
+            4,
+            15,
+            16,
+            17
+        ],
+        "preco_hospedagem": 483.56
+    },
+    {
+        "id": 9,
+        "nome": "Hotel Atena",
+        "destino": "BSB",
+        "quartos_disp": [
+            6,
+            11,
+            12,
+            13,
+            22,
+            24,
+            25
+        ],
+        "preco_hospedagem": 475.5
+    },
+    {
+        "id": 10,
+        "nome": "Hotel Flor",
+        "destino": "MAB",
+        "quartos_disp": [
+            3,
+            4,
+            15,
+            16,
+            17
+        ],
+        "preco_hospedagem": 421.5
+    },
+    {
+        "id": 11,
+        "nome": "Hotel Village",
+        "destino": "MAB",
+        "quartos_disp": [
+            4,
+            8,
+            9
+        ],
+        "preco_hospedagem": 419.89
+    },
+    {
+        "id": 12,
+        "nome": "Hotel Park",
+        "destino": "MAB",
+        "quartos_disp": [
+            6,
+            11,
+            12,
+            13,
+            22,
+            24,
+            25
+        ],
+        "preco_hospedagem": 397.45
+    },
+    {
+        "id": 13,
+        "nome": "Hotel Aguas",
+        "destino": "MAB",
+        "quartos_disp": [
+            4,
+            8,
+            9
+        ],
+        "preco_hospedagem": 391.48
+    },
+    {
+        "id": 14,
+        "nome": "Hotel Alaska",
+        "destino": "MAB",
+        "quartos_disp": [
+            5,
+            6,
+            38,
+            39
+        ],
+        "preco_hospedagem": 364.12
+    },
+    {
+        "id": 15,
+        "nome": "Hotel Cristal",
+        "destino": "MAB",
+        "quartos_disp": [
+            5,
+            6,
+            38,
+            39
+        ],
+        "preco_hospedagem": 347.58
+    },
+    {
+        "id": 16,
+        "nome": "Hotel America",
+        "destino": "MAB",
+        "quartos_disp": [
+            3,
+            4,
+            15,
+            16,
+            17
+        ],
+        "preco_hospedagem": 451.23
+    },
+    {
+        "id": 17,
+        "nome": "Hotel Marabá",
+        "destino": "MAB",
+        "quartos_disp": [
+            4,
+            8,
+            9
+        ],
+        "preco_hospedagem": 486.59
+    },
+    {
+        "id": 18,
+        "nome": "Hotel Colina",
+        "destino": "MAB",
+        "quartos_disp": [
+            6,
+            11,
+            12,
+            13,
+            22,
+            24,
+            25
+        ],
+        "preco_hospedagem": 364.12
+    },
+    {
+        "id": 19,
+        "nome": "Hotel Tucunaré",
+        "destino": "MAB",
+        "quartos_disp": [
+            6,
+            11,
+            12,
+            13,
+            22,
+            24,
+            25
+        ],
+        "preco_hospedagem": 367.84
+    },
+    {
+        "id": 20,
+        "nome": "Hotel Tambaqui",
+        "destino": "MAB",
+        "quartos_disp": [
+            3,
+            4,
+            15,
+            16,
+            17
+        ],
+        "preco_hospedagem": 367.54
+    },
+    {
+        "id": 21,
+        "nome": "Hotel Beira Rio",
+        "destino": "MAB",
+        "quartos_disp": [
+            4,
+            8,
+            9
+        ],
+        "preco_hospedagem": 486.59
+    },
+    {
+        "id": 22,
+        "nome": "Hotel Coqueiro",
+        "destino": "MAB",
+        "quartos_disp": [
+            5,
+            6,
+            38,
+            39
+        ],
+        "preco_hospedagem": 419.89
+    },
+    {
+        "id": 23,
+        "nome": "Hotel Pousada",
+        "destino": "MAB",
+        "quartos_disp": [
+            5,
+            6,
+            38,
+            39
+        ],
+        "preco_hospedagem": 367.54
+    },
+    {
+        "id": 24,
+        "nome": "Hotel Fazenda",
+        "destino": "MAB",
+        "quartos_disp": [
+            6,
+            11,
+            12,
+            13,
+            22,
+            24,
+            25
+        ],
+        "preco_hospedagem": 419.89
+    },
+    {
+        "id": 25,
+        "nome": "Hotel Amazônia",
+        "destino": "MAB",
+        "quartos_disp": [
+            3,
+            4,
+            15,
+            16,
+            17
+        ],
+        "preco_hospedagem": 486.59
+    },
+    {
+        "id": 26,
+        "nome": "Hotel Norte",
+        "destino": "MAB",
+        "quartos_disp": [
+            5,
+            6,
+            38,
+            39
+        ],
+        "preco_hospedagem": 367.54
+    },
+    {
+        "id": 27,
+        "nome": "Hotel Praia",
+        "destino": "MAB",
+        "quartos_disp": [
+            4,
+            8,
+            9
+        ],
+        "preco_hospedagem": 419.89
+    }
+]

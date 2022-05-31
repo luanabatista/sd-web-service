@@ -13,12 +13,14 @@ import json
 
 app = FastAPI()
 
-with open('voos.json', 'r' ) as f:
-    voos = json.load(f)
-with open('passagens.json', 'r' ) as f:
-    passagens = json.load(f)
 with open('hospedagens.json', 'r' ) as f:
     hospedagens = json.load(f)
+    
+with open('voos.json', 'r' ) as f:
+    voos = json.load(f)
+
+with open('passagens.json', 'r' ) as f:
+    passagens = json.load(f)
 with open('compras.json', 'r' ) as f:
     compras = json.load(f)
 
@@ -38,6 +40,10 @@ def geraNumId(dict):
     else: 
         return 1
 
+def procuraVooPorId(id_voo):
+    for v in voos:
+        if id_voo == v['id']:
+            return v
 
 # 1 fazer classes
 # 2 popular classes
@@ -69,23 +75,19 @@ def busca_voo(ida_e_volta: bool = Query(None, title="IdaEVolta", description="Th
         voos = procuraVoo(origem, destino, data_ida, quant_pessoas)
         return voos
 
-@app.post('/compra/passagem', status_code=201)
-# id_voo, num_cadeira, nome_pessoa, idade_pessoa
-def compra_passagem(nome_completo: str, idade: int, id_voo: int, cadeira: int, nome_cartao: str, 
+@app.post('/voos/compra-passagem', status_code=201)
+def compra_passagem(nome_completo: str, idade: int, num_pessoa: str, id_voo: int, cadeira: int, nome_cartao: str, 
                     num_cartao: str, crv: int, parcelas: int, venc_cartao):
+
     #na compra faz um post em passagem
     #post em compra 
     #e um put em voos
-
-    #pega os dados da passagem, pega os dados da pessoa, dar o valor final e pega os dados do cartao
-    #  depois disso fetua as alteraçoes em cada um
-
-
     nova_passagem = {
         "id": geraNumId(passagens),
         "pessoa": {
             "nome": nome_completo, 
-            "idade": idade },
+            "idade": idade,
+            "numero": num_pessoa},
         "id_voo": id_voo,
         "cadeira": cadeira
     }
@@ -120,46 +122,23 @@ def compra_passagem(nome_completo: str, idade: int, id_voo: int, cadeira: int, n
         json.dump(passagens, f)
 
 
-@app.get('/hospedagens/', status_code=200)
+@app.get('/hospedagens', status_code=200)
 def get_hospedagens():
     return hospedagens
-
-@app.get('/hospedagens/search', status_code=200)
-def search_voo(nome: str = Query(None, title="Nome", description="The origem to filter for"),
-               cidade: str = Query(None, title="Cidade", description="The destino to filter for")):
-    opcoesHospedagens = []
-    for h in hospedagens:
-        if nome == h['origem']:
-            if cidade == h['destino']:
-                opcoesHospedagens.append(h)
-    return opcoesHospedagens
-    
 '''
-@app.put('/changePErson', status_code=204)
-def change_person(person: Person):
-    new_person = {
-        "id": person.id,
-        "name": person.name,
-        "age": person.age,
-        "gender": person.gender
-    }
+@app.get('/hospedagens/busca', status_code=200)
+def busca_voo( destino: str = Query(None, title="Destino", description="The destino to filter for"),
+               data_entrada: str = Query(None, title="DataIda", description="The data to filter for"),
+               data_saida: Optional[str] = Query(None, title="DataVolta", description="The origem to filter for"),
+               num_quartos: int = Query(None, title="QuantPessoas", description="The origem to filter for")):
 
-    person_list = [p for p in people if p['id'] == person.id]
-    if len(person_list) > 0:
-        people.remove(person_list[0])
-        people.append(new_person)
-        with open('people.json', 'w') as f:
-            json.dump(people, f)
-    else:
-        return HTTPException(status_code=404, detail=f"Person with id {person.id} does not exist!")
+    def procuraHospedagem(destino, data_entrada, data_saida, num_quartos):
+        opcoesHospedagens = []
+        for h in hospedagens:
+            if destino == h['destino']:
+                if num_quartos <= len(h['quartos_disp']):
+                    opcoesHospedagens.append(h)
+        return opcoesHospedagens
 
-@app.delete('/deletePerson/{p_id}', status_code=204)
-def delete_person(p_id: int):
-    person = [p for p in people if p['id'] == p_id]
-    if len(person) > 0:
-        people.remove(person[0])
-        with open('people.json', 'w') as f:
-            json.dump(people, f)
-    else: 
-        return HTTPException(status_code=404, detail=f"There is no person with id {p_id}")
-        '''
+    return procuraHospedagem(destino, data_entrada, data_saida, num_quartos)
+    '''
