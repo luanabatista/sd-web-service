@@ -3,7 +3,7 @@ from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 from typing import Optional
 
-from numpy import append
+from numpy import append, double
 from Model.Compra import Compra
 
 from Model.Voo import Voo
@@ -81,6 +81,22 @@ def busca_voo(ida_e_volta: bool = Query(None, title="IdaEVolta", description="Th
         voos = procuraVoo(origem, destino, data_ida, quant_pessoas)
         return voos
 
+@app.get('/passagens/compra')
+def compra (id_ida: int = Query(None, title="Destino", description="The destino to filter for"),
+            id_volta: int = Query(None, title="DataIda", description="The data to filter for"),
+            quant_pessoas: int = Query(None, title="DataIda", description="The data to filter for")):
+    # faz um get com os id dos voos, e quant de pessoas, dai ja recebe o valor, eh so recolher os dados
+    #envia os dados e realiza a compra, encaminha pra proxima pag q pega os dados do cartao 
+    #retorna todos os dados da compra
+
+    preco_ida = double(procuraVooPorId(id_ida)['preco_passagem'])
+    preco_volta = double(procuraVooPorId(id_volta)['preco_passagem'])
+    
+    preco_total = quant_pessoas*preco_ida+quant_pessoas*preco_volta
+
+    return preco_total
+
+
 @app.post('/passagens/finalizar-compra')
 def compra_passagem(quant_pessoas: int, dados_pessoas: list, id_voo: int, nome_cartao: str, 
                     num_cartao: str, crv: int, parcelas: int, venc_cartao):
@@ -96,10 +112,6 @@ def compra_passagem(quant_pessoas: int, dados_pessoas: list, id_voo: int, nome_c
             "cadeira": p.cadeira
         }
         passagens_compra.append(nova_passagem)
-
-# faz um get com os id dos voos, e quant de pessoas, dai ja recebe o valor, eh so recolher os dados
-    #envia os dados e realiza a compra, encaminha pra proxima pag q pega os dados do cartao 
-    #retorna todos os dados da compra
 
     nova_compra = {
         "id": geraNumId(compras),
