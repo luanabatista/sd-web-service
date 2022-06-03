@@ -1,5 +1,6 @@
-from datetime import date, datetime
 from fastapi import FastAPI, Query, HTTPException
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 from typing import Optional
 
 from numpy import append
@@ -8,17 +9,28 @@ from Model.Compra import Compra
 from Model.Voo import Voo
 from Model.Passagem import Passagem
 import datetime
+from datetime import date, datetime
 
 import json
 
-app = FastAPI()
+origins = ["http://localhost:4200"]
+
+middleware = [
+    Middleware(CORSMiddleware, 
+               allow_origins=origins,
+               allow_credentials=True,
+               allow_methods=["*"],
+               allow_headers=["*"],
+               )
+]
+
+app = FastAPI(middleware=middleware)
 
 with open('hospedagens.json', 'r' ) as f:
     hospedagens = json.load(f)
-    
+  
 with open('voos.json', 'r' ) as f:
     voos = json.load(f)
-
 with open('passagens.json', 'r' ) as f:
     passagens = json.load(f)
 with open('compras.json', 'r' ) as f:
@@ -45,57 +57,54 @@ def procuraVooPorId(id_voo):
         if id_voo == v['id']:
             return v
 
-# 1 fazer classes
-# 2 popular classes
 
-# consulta de passagens aéreas - get
-# compra de passagens aéreas - put
-# consulta de hospedagem - get
-# compra de hospedagem - put
-
-#consulta todos os voos
-@app.get('/voos', status_code=200)
+@app.get('/passagens/voos')
 def get_voos():
     return voos
 
-#consulta voo por ida e volta, origem, destino, data de ida, data de volta, quant de pessoas
-@app.get('/voos/busca', status_code=200)
+@app.get('/passagens/busca')
 def busca_voo(ida_e_volta: bool = Query(None, title="IdaEVolta", description="The origem to filter for"),
-               origem: str = Query(None, title="Origem", description="The origem to filter for"),
-               destino: str = Query(None, title="Destino", description="The destino to filter for"),
-               data_ida: str = Query(None, title="DataIda", description="The data to filter for"),
-               data_volta: Optional[str] = Query(None, title="DataVolta", description="The origem to filter for"),
-               quant_pessoas: int = Query(None, title="QuantPessoas", description="The origem to filter for")):
+              origem: str = Query(None, title="Origem", description="The origem to filter for"),
+              destino: str = Query(None, title="Destino", description="The destino to filter for"),
+              data_ida: str = Query(None, title="DataIda", description="The data to filter for"),
+              data_volta: Optional[str] = Query(None, title="DataVolta", description="The origem to filter for"),
+              quant_pessoas: int = Query(None, title="QuantPessoas", description="The origem to filter for")):
 
+    print(ida_e_volta, origem, destino, data_ida, data_volta, quant_pessoas)
+    print(type(ida_e_volta), type(origem), type(destino), type(data_ida), type(data_volta), type(quant_pessoas))
     if ida_e_volta:
         voosIda = procuraVoo(origem, destino, data_ida, quant_pessoas)
         voosVolta = procuraVoo(destino, origem, data_volta, quant_pessoas)
+        print(voosIda, voosVolta)
         return voosIda, voosVolta
     else:
         voos = procuraVoo(origem, destino, data_ida, quant_pessoas)
         return voos
 
-@app.post('/voos/compra-passagem', status_code=201)
-def compra_passagem(nome_completo: str, idade: int, num_pessoa: str, id_voo: int, cadeira: int, nome_cartao: str, 
+@app.post('/passagens/finalizar-compra')
+def compra_passagem(quant_pessoas: int, dados_pessoas: list, id_voo: int, nome_cartao: str, 
                     num_cartao: str, crv: int, parcelas: int, venc_cartao):
+    passagens_compra = []
+    for p in dados_pessoas:
+        nova_passagem = {
+            "id": geraNumId(passagens),
+            "pessoa": {
+                "nome": p.nome_completo, 
+                "idade": p.idade,
+                "numero": p.num_pessoa},
+            "id_voo": id_voo,
+            "cadeira": p.cadeira
+        }
+        passagens_compra.append(nova_passagem)
 
-    #na compra faz um post em passagem
-    #post em compra 
-    #e um put em voos
-    nova_passagem = {
-        "id": geraNumId(passagens),
-        "pessoa": {
-            "nome": nome_completo, 
-            "idade": idade,
-            "numero": num_pessoa},
-        "id_voo": id_voo,
-        "cadeira": cadeira
-    }
+# faz um get com os id dos voos, e quant de pessoas, dai ja recebe o valor, eh so recolher os dados
+    #envia os dados e realiza a compra, encaminha pra proxima pag q pega os dados do cartao 
+    #retorna todos os dados da compra
 
     nova_compra = {
         "id": geraNumId(compras),
-        "valor": 100.00,
-        "itens": [["P", nova_passagem.id]],
+        "valor": procuraVooPorId(id_voo)['preco_passagem']*quant_pessoas,
+        "itens": [passagens_compra],
         "dados_cartao": {
             "nome": nome_cartao,
             "numero": num_cartao,
@@ -107,7 +116,7 @@ def compra_passagem(nome_completo: str, idade: int, num_pessoa: str, id_voo: int
     for v in voos:
         if id_voo == v['id']:
             for c in v['cadeiras_disp']:
-                if c == cadeira:
+                if c == p.cadeira:
                     v['cadeiras_disp'].remove(c)
     with open('voos.json', 'w') as f:
         json.dump(voos, f, indent=4)
@@ -121,6 +130,7 @@ def compra_passagem(nome_completo: str, idade: int, num_pessoa: str, id_voo: int
     with open('passagens.json', 'w') as f:
         json.dump(passagens, f)
 
+    return nova_compra
 
 @app.get('/hospedagens', status_code=200)
 def get_hospedagens():
