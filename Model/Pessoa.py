@@ -3,5 +3,5 @@ from typing import Optional
 
 class Pessoa (BaseModel):
     nome: str
-    idade: int
+    idade: str
     numero: str

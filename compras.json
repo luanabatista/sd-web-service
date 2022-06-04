@@ -1,1 +1,1 @@
-[]
+[{"id": 1, "valor": "884.04", "itens": [[{"id": 1, "pessoa": {"nome": "luana", "numero": "16546456465", "idade": "19"}, "id_voo": "1"}, {"id": 1, "pessoa": {"nome": "luana", "numero": "16546456465", "idade": "19"}, "id_voo": "1"}]], "dados_cartao": {"nome": "ALASKA AKLS LAKSA", "numero": "1234 1234 1234 1324", "crv": "123", "vencimento": "12/2024"}, "parcelas": "3"}]

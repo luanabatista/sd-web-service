@@ -4,16 +4,6 @@
         "origem": "MAB",
         "destino": "BSB",
         "data": "2022-06-06 06:00:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            6,
-            11,
-            12,
-            13,
-            22,
-            24,
-            25
-        ],
         "preco_passagem": 486.59
     },
     {
@@ -21,13 +11,6 @@
         "origem": "MAB",
         "destino": "BSB",
         "data": "2022-06-06 14:30:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            5,
-            6,
-            38,
-            39
-        ],
         "preco_passagem": 486.59
     },
     {
@@ -35,12 +18,6 @@
         "origem": "MAB",
         "destino": "BSB",
         "data": "2022-06-07 06:00:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            4,
-            8,
-            9
-        ],
         "preco_passagem": 590.0
     },
     {
@@ -48,14 +25,6 @@
         "origem": "MAB",
         "destino": "BSB",
         "data": "2022-06-08 06:00:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            3,
-            4,
-            15,
-            16,
-            17
-        ],
         "preco_passagem": 321.5
     },
     {
@@ -63,16 +32,6 @@
         "origem": "MAB",
         "destino": "BSB",
         "data": "2022-06-09 06:00:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            6,
-            11,
-            12,
-            13,
-            22,
-            24,
-            25
-        ],
         "preco_passagem": 457.16
     },
     {
@@ -80,13 +39,6 @@
         "origem": "MAB",
         "destino": "BSB",
         "data": "2022-06-09 14:30:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            5,
-            6,
-            38,
-            39
-        ],
         "preco_passagem": 354.65
     },
     {
@@ -94,13 +46,6 @@
         "origem": "MAB",
         "destino": "BSB",
         "data": "2022-06-10 06:00:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            5,
-            6,
-            38,
-            39
-        ],
         "preco_passagem": 367.54
     },
     {
@@ -108,14 +53,6 @@
         "origem": "MAB",
         "destino": "BSB",
         "data": "2022-06-10 14:30:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            3,
-            4,
-            15,
-            16,
-            17
-        ],
         "preco_passagem": 483.56
     },
     {
@@ -123,16 +60,6 @@
         "origem": "MAB",
         "destino": "BSB",
         "data": "2022-06-10 20:00:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            6,
-            11,
-            12,
-            13,
-            22,
-            24,
-            25
-        ],
         "preco_passagem": 475.5
     },
     {
@@ -140,14 +67,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-06 19:00:00",
-        "quant_cadeiras": 30,
-        "cadeiras_disp": [
-            3,
-            4,
-            15,
-            16,
-            17
-        ],
         "preco_passagem": 421.5
     },
     {
@@ -155,12 +74,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-07 04:00:00",
-        "quant_cadeiras": 30,
-        "cadeiras_disp": [
-            4,
-            8,
-            9
-        ],
         "preco_passagem": 419.89
     },
     {
@@ -168,16 +81,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-07 19:00:00",
-        "quant_cadeiras": 30,
-        "cadeiras_disp": [
-            6,
-            11,
-            12,
-            13,
-            22,
-            24,
-            25
-        ],
         "preco_passagem": 397.45
     },
     {
@@ -185,12 +88,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-08 14:00:00",
-        "quant_cadeiras": 30,
-        "cadeiras_disp": [
-            4,
-            8,
-            9
-        ],
         "preco_passagem": 391.48
     },
     {
@@ -198,13 +95,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-09 17:00:00",
-        "quant_cadeiras": 30,
-        "cadeiras_disp": [
-            5,
-            6,
-            38,
-            39
-        ],
         "preco_passagem": 364.12
     },
     {
@@ -212,13 +102,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-09 21:00:00",
-        "quant_cadeiras": 30,
-        "cadeiras_disp": [
-            5,
-            6,
-            38,
-            39
-        ],
         "preco_passagem": 347.58
     },
     {
@@ -226,14 +109,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-10 06:00:00",
-        "quant_cadeiras": 30,
-        "cadeiras_disp": [
-            3,
-            4,
-            15,
-            16,
-            17
-        ],
         "preco_passagem": 451.23
     },
     {
@@ -241,12 +116,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-10 11:00:00",
-        "quant_cadeiras": 30,
-        "cadeiras_disp": [
-            4,
-            8,
-            9
-        ],
         "preco_passagem": 486.59
     },
     {
@@ -254,16 +123,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-10 22:00:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            6,
-            11,
-            12,
-            13,
-            22,
-            24,
-            25
-        ],
         "preco_passagem": 364.12
     },
     {
@@ -271,16 +130,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-11 06:00:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            6,
-            11,
-            12,
-            13,
-            22,
-            24,
-            25
-        ],
         "preco_passagem": 367.84
     },
     {
@@ -288,14 +137,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-11 11:00:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            3,
-            4,
-            15,
-            16,
-            17
-        ],
         "preco_passagem": 367.54
     },
     {
@@ -303,12 +144,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-11 16:00:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            4,
-            8,
-            9
-        ],
         "preco_passagem": 486.59
     },
     {
@@ -316,13 +151,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-12 06:00:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            5,
-            6,
-            38,
-            39
-        ],
         "preco_passagem": 419.89
     },
     {
@@ -330,13 +158,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-12 16:00:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            5,
-            6,
-            38,
-            39
-        ],
         "preco_passagem": 367.54
     },
     {
@@ -344,16 +165,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-12 20:00:00",
-        "quant_cadeiras": 40,
-        "cadeiras_disp": [
-            6,
-            11,
-            12,
-            13,
-            22,
-            24,
-            25
-        ],
         "preco_passagem": 419.89
     },
     {
@@ -362,13 +173,6 @@
         "destino": "MAB",
         "data": "2022-06-13 07:30:00",
         "quant_cadeiras": 30,
-        "cadeiras_disp": [
-            3,
-            4,
-            15,
-            16,
-            17
-        ],
         "preco_passagem": 486.59
     },
     {
@@ -376,13 +180,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-13 15:30:00",
-        "quant_cadeiras": 30,
-        "cadeiras_disp": [
-            5,
-            6,
-            38,
-            39
-        ],
         "preco_passagem": 367.54
     },
     {
@@ -390,12 +187,6 @@
         "origem": "BSB",
         "destino": "MAB",
         "data": "2022-06-14 06:00:00",
-        "quant_cadeiras": 30,
-        "cadeiras_disp": [
-            4,
-            8,
-            9
-        ],
         "preco_passagem": 419.89
     }
 ]

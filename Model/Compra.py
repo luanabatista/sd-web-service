@@ -1,10 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-
-import datetime
-
 from Model.DadosCartao import DadosCartao
-from Model.Passagem import Passagem
 
 class Compra (BaseModel):
     id: Optional[int] = None

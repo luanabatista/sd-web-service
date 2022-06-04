@@ -1,17 +1,11 @@
-from fastapi import FastAPI, Query, HTTPException
+from fastapi import FastAPI
 from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 from typing import Optional
-
-from numpy import append, double
-from Model.Compra import Compra
-
-from Model.Voo import Voo
-from Model.Passagem import Passagem
-import datetime
-from datetime import date, datetime
-
+from numpy import double, number
+from Model.FinalizaCompra import FinalizaCompra
 import json
+from Model.Pessoa import Pessoa
 
 origins = ["http://localhost:4200"]
 
@@ -28,7 +22,6 @@ app = FastAPI(middleware=middleware)
 
 with open('hospedagens.json', 'r' ) as f:
     hospedagens = json.load(f)
-  
 with open('voos.json', 'r' ) as f:
     voos = json.load(f)
 with open('passagens.json', 'r' ) as f:
@@ -36,14 +29,13 @@ with open('passagens.json', 'r' ) as f:
 with open('compras.json', 'r' ) as f:
     compras = json.load(f)
 
-def procuraVoo(origem, destino, data, quant_pessoas):
+def procuraVoo(origem, destino, data):
     opcoesVoos = []
     for v in voos:
         if origem == v['origem']:
             if destino == v['destino']:
                 if data in v['data']:
-                    if quant_pessoas <= len(v['cadeiras_disp']):
-                        opcoesVoos.append(v)
+                    opcoesVoos.append(v)
     return opcoesVoos
 
 def geraNumId(dict):
@@ -57,18 +49,13 @@ def procuraVooPorId(id_voo):
         if id_voo == v['id']:
             return v
 
-
-@app.get('/passagens/voos')
-def get_voos():
-    return voos
+def procuraHospedagemPorId(id_hospedagem):
+    for h in hospedagens:
+        if id_hospedagem == h['id']:
+            return h
 
 @app.get('/passagens/busca')
-def busca_voo(ida_e_volta: bool = Query(None, title="IdaEVolta", description="The origem to filter for"),
-              origem: str = Query(None, title="Origem", description="The origem to filter for"),
-              destino: str = Query(None, title="Destino", description="The destino to filter for"),
-              data_ida: str = Query(None, title="DataIda", description="The data to filter for"),
-              data_volta: Optional[str] = Query(None, title="DataVolta", description="The origem to filter for"),
-              quant_pessoas: int = Query(None, title="QuantPessoas", description="The origem to filter for")):
+def busca_voo(ida_e_volta: bool, origem: str, destino: str, data_ida: str, data_volta: Optional[str], quant_pessoas: int ):
 
     print(ida_e_volta, origem, destino, data_ida, data_volta, quant_pessoas)
     print(type(ida_e_volta), type(origem), type(destino), type(data_ida), type(data_volta), type(quant_pessoas))
@@ -82,12 +69,7 @@ def busca_voo(ida_e_volta: bool = Query(None, title="IdaEVolta", description="Th
         return voos
 
 @app.get('/passagens/compra')
-def compra (id_ida: int = Query(None, title="Destino", description="The destino to filter for"),
-            id_volta: int = Query(None, title="DataIda", description="The data to filter for"),
-            quant_pessoas: int = Query(None, title="DataIda", description="The data to filter for")):
-    # faz um get com os id dos voos, e quant de pessoas, dai ja recebe o valor, eh so recolher os dados
-    #envia os dados e realiza a compra, encaminha pra proxima pag q pega os dados do cartao 
-    #retorna todos os dados da compra
+def compra (id_ida: int, id_volta: int, quant_pessoas: int):
 
     preco_ida = double(procuraVooPorId(id_ida)['preco_passagem'])
     preco_volta = double(procuraVooPorId(id_volta)['preco_passagem'])
@@ -96,47 +78,77 @@ def compra (id_ida: int = Query(None, title="Destino", description="The destino 
 
     return preco_total
 
-
 @app.post('/passagens/finalizar-compra')
-def compra_passagem(quant_pessoas: int, dados_pessoas: list, id_voo: int, nome_cartao: str, 
-                    num_cartao: str, crv: int, parcelas: int, venc_cartao):
+def finalizar_compra(finalizaCompra: FinalizaCompra):
+
+    array_dados_pessoas = finalizaCompra.dados_pessoas.split(',')
+    print(array_dados_pessoas)
+    print(finalizaCompra)
+    quant_pessoas = int(finalizaCompra.quant_pessoas)
+
+    print(array_dados_pessoas[0])
+
     passagens_compra = []
-    for p in dados_pessoas:
-        nova_passagem = {
-            "id": geraNumId(passagens),
-            "pessoa": {
-                "nome": p.nome_completo, 
-                "idade": p.idade,
-                "numero": p.num_pessoa},
-            "id_voo": id_voo,
-            "cadeira": p.cadeira
-        }
-        passagens_compra.append(nova_passagem)
+    while quant_pessoas>0:
+        if bool(finalizaCompra.id_volta):
+                nova_passagem = {
+                    "id": geraNumId(passagens),
+                    "pessoa": {
+                        "nome": array_dados_pessoas[0],
+                        "numero": array_dados_pessoas[1],
+                        "idade": array_dados_pessoas[2]
+                    },
+                    "id_voo": finalizaCompra.id_ida,
+                }
+                passagens_compra.append(nova_passagem)
+
+                nova_passagem = {
+                    "id": geraNumId(passagens),
+                    "pessoa": {
+                        "nome": array_dados_pessoas[0],
+                        "numero": array_dados_pessoas[1],
+                        "idade": array_dados_pessoas[2]
+                    },
+                    "id_voo": finalizaCompra.id_ida,
+                }
+                array_dados_pessoas.pop(0)
+                array_dados_pessoas.pop(0)
+                array_dados_pessoas.pop(0)
+                passagens_compra.append(nova_passagem)
+        else:
+            
+                nova_passagem = {
+                    "id": geraNumId(passagens),
+                    "pessoa": {
+                        "nome": array_dados_pessoas[0],
+                        "numero": array_dados_pessoas[1],
+                        "idade": array_dados_pessoas[2]
+                    },
+                    "id_voo": finalizaCompra.id_ida,
+                }
+                array_dados_pessoas.pop(0)
+                array_dados_pessoas.pop(0)
+                array_dados_pessoas.pop(0)
+                passagens_compra.append(nova_passagem)
+        quant_pessoas=-1
+
+    
 
     nova_compra = {
         "id": geraNumId(compras),
-        "valor": procuraVooPorId(id_voo)['preco_passagem']*quant_pessoas,
+        "valor": finalizaCompra.valor_total,
         "itens": [passagens_compra],
         "dados_cartao": {
-            "nome": nome_cartao,
-            "numero": num_cartao,
-            "crv": crv,
-            "vencimento": venc_cartao },
-        "parcelas": parcelas
+            "nome": finalizaCompra.nome_cartao,
+            "numero": finalizaCompra.num_cartao,
+            "crv": finalizaCompra.crv,
+            "vencimento": finalizaCompra.venc_cartao },
+        "parcelas": finalizaCompra.parcelas
     }
-
-    for v in voos:
-        if id_voo == v['id']:
-            for c in v['cadeiras_disp']:
-                if c == p.cadeira:
-                    v['cadeiras_disp'].remove(c)
-    with open('voos.json', 'w') as f:
-        json.dump(voos, f, indent=4)
 
     compras.append(nova_compra)
     with open('compras.json', 'w') as f:
         json.dump(compras, f)
-
 
     passagens.append(nova_passagem)
     with open('passagens.json', 'w') as f:
@@ -144,23 +156,68 @@ def compra_passagem(quant_pessoas: int, dados_pessoas: list, id_voo: int, nome_c
 
     return nova_compra
 
-@app.get('/hospedagens', status_code=200)
-def get_hospedagens():
-    return hospedagens
-'''
-@app.get('/hospedagens/busca', status_code=200)
-def busca_voo( destino: str = Query(None, title="Destino", description="The destino to filter for"),
-               data_entrada: str = Query(None, title="DataIda", description="The data to filter for"),
-               data_saida: Optional[str] = Query(None, title="DataVolta", description="The origem to filter for"),
-               num_quartos: int = Query(None, title="QuantPessoas", description="The origem to filter for")):
+@app.get('/hospedagens/busca')
+def busca_hospedagem(destino: str, data_entrada: str, data_saida: str, quant_pessoas: int, num_quartos: int ):
+    opcoesHospedagens = []
+    for h in hospedagens:
+        if destino == h['destino']:
+            opcoesHospedagens.append(h)
+    return opcoesHospedagens
 
-    def procuraHospedagem(destino, data_entrada, data_saida, num_quartos):
-        opcoesHospedagens = []
-        for h in hospedagens:
-            if destino == h['destino']:
-                if num_quartos <= len(h['quartos_disp']):
-                    opcoesHospedagens.append(h)
-        return opcoesHospedagens
+@app.get('/hospedagens/compra')
+def compra_hospedagem(id_hospedagem: str, num_quartos: int, quant_pessoas: int):
+    preco_diaria = double(procuraHospedagemPorId(id_hospedagem)['preco_diaria'])
+    preco_total = quant_pessoas*preco_diaria
 
-    return procuraHospedagem(destino, data_entrada, data_saida, num_quartos)
-    '''
+    return preco_total
+
+@app.post('/hospedagens/finalizar-compra')
+def finalizar_compra_hospedagem(finalizaCompra: FinalizaCompra):
+
+    array_dados_pessoas = finalizaCompra.dados_pessoas.split(',')
+    print(array_dados_pessoas)
+    print(finalizaCompra)
+    quant_pessoas = int(finalizaCompra.quant_pessoas)
+
+    print(array_dados_pessoas[0])
+
+    hospedagens_compra = []
+    while quant_pessoas>0:
+        if bool(finalizaCompra.id_volta):
+                nova_hospedagem = {
+                    "id": geraNumId(passagens),
+                    "pessoa": {
+                        "nome": array_dados_pessoas[0],
+                        "numero": array_dados_pessoas[1],
+                        "idade": array_dados_pessoas[2]
+                    },
+                    "id_quarto": array_dados_pessoas[3],
+                }
+                hospedagens_compra.append(nova_hospedagem)
+                array_dados_pessoas.pop(0)
+                array_dados_pessoas.pop(0)
+                array_dados_pessoas.pop(0)
+                array_dados_pessoas.pop(0)
+        quant_pessoas=-1
+
+    nova_compra = {
+        "id": geraNumId(compras),
+        "valor": finalizaCompra.valor_total,
+        "itens": [hospedagens_compra],
+        "dados_cartao": {
+            "nome": finalizaCompra.nome_cartao,
+            "numero": finalizaCompra.num_cartao,
+            "crv": finalizaCompra.crv,
+            "vencimento": finalizaCompra.venc_cartao },
+        "parcelas": finalizaCompra.parcelas
+    }
+
+    compras.append(nova_compra)
+    with open('compras.json', 'w') as f:
+        json.dump(compras, f)
+
+    passagens.append(nova_hospedagem)
+    with open('hospedagens.json', 'w') as f:
+        json.dump(hospedagens, f)
+
+    return nova_compra
