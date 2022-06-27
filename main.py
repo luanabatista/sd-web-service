@@ -60,12 +60,12 @@ def busca_voo(ida_e_volta: bool, origem: str, destino: str, data_ida: str, data_
     print(ida_e_volta, origem, destino, data_ida, data_volta, quant_pessoas)
     print(type(ida_e_volta), type(origem), type(destino), type(data_ida), type(data_volta), type(quant_pessoas))
     if ida_e_volta:
-        voosIda = procuraVoo(origem, destino, data_ida, quant_pessoas)
-        voosVolta = procuraVoo(destino, origem, data_volta, quant_pessoas)
+        voosIda = procuraVoo(origem, destino, data_ida)
+        voosVolta = procuraVoo(destino, origem, data_volta)
         print(voosIda, voosVolta)
         return voosIda, voosVolta
     else:
-        voos = procuraVoo(origem, destino, data_ida, quant_pessoas)
+        voos = procuraVoo(origem, destino, data_ida)
         return voos
 
 @app.get('/passagens/compra')
